@@ -4,6 +4,9 @@ using MudBlazor.Services;
 
 using RazoribraryTest;
 using RazoribraryTest.Data;
+using RazoribraryTest.Service;
+
+using WinFormsAppTest.Service;
 
 namespace WinFormsAppTest
 {
@@ -17,6 +20,7 @@ namespace WinFormsAppTest
             services.AddWindowsFormsBlazorWebView();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<IPlatformsService>(new PlatformsService());
             blazorWebView1.HostPage = "wwwroot\\index.html";
             blazorWebView1.Services = services.BuildServiceProvider();
             blazorWebView1.RootComponents.Add<Main>("#app");

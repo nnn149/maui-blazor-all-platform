@@ -6,6 +6,9 @@ using MudBlazor.Services;
 
 using RazoribraryTest;
 using RazoribraryTest.Data;
+using RazoribraryTest.Service;
+
+using WpfAppTest.Service;
 
 namespace WpfAppTest
 {
@@ -26,6 +29,7 @@ namespace WpfAppTest
             services.AddWpfBlazorWebView();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<IPlatformsService>(new PlatformsService());
             blazorWebView1.HostPage = "wwwroot\\index.html";
             blazorWebView1.Services = services.BuildServiceProvider();
 

@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
-using RazoribraryTest.Data;
+﻿using MauiAppTest.Service;
+
+using Microsoft.Extensions.DependencyInjection;
+
 using MudBlazor.Services;
+
+using RazoribraryTest.Data;
+using RazoribraryTest.Service;
+
 namespace MauiAppTest;
 
 public static class MauiProgram
@@ -28,7 +34,7 @@ public static class MauiProgram
 
         //自定义Service
         builder.Services.AddSingleton<WeatherForecastService>();
-
+        builder.Services.AddSingleton<IPlatformsService>(new PlatformsService());
 
 
         //设置ViewModel，用于构造函数依赖注入
