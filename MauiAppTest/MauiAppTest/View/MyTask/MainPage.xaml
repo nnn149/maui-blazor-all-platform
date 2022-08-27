@@ -57,5 +57,9 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
+
+        <ActivityIndicator Grid.RowSpan="3" Grid.ColumnSpan="3"  IsRunning="{Binding IsLoading}">
+
+        </ActivityIndicator>
     </Grid>
 </ContentPage>

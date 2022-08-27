@@ -12,17 +12,19 @@ namespace MauiAppTest.ViewModel.MyTask
 {
     public partial class MainViewModel : ObservableObject
     {
-        IConnectivity connectivity;
+        public ObservableCollection<string> Items { get; } = new();
 
-        [ObservableProperty]
-        ObservableCollection<string> _items;
+        IConnectivity connectivity;
 
         [ObservableProperty]
         string _text;
 
+        [ObservableProperty]
+        bool _isLoading = false;
+
         public MainViewModel(IConnectivity connectivity)
         {
-            Items = new ObservableCollection<string>();
+
             this.connectivity = connectivity;
         }
 
@@ -55,7 +57,10 @@ namespace MauiAppTest.ViewModel.MyTask
         [RelayCommand]
         async Task Tap(string str)
         {
+            IsLoading = true;
+            await Task.Delay(1000);
             await Shell.Current.GoToAsync($"mytask/{nameof(DetailPage)}?Text={str}");
+            IsLoading = false;
         }
     }
 
