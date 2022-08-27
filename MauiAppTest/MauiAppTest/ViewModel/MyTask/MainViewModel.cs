@@ -22,6 +22,9 @@ namespace MauiAppTest.ViewModel.MyTask
         [ObservableProperty]
         bool _isLoading = false;
 
+        [ObservableProperty]
+        bool _isRefreshing = false;
+
         public MainViewModel(IConnectivity connectivity)
         {
 
@@ -58,9 +61,18 @@ namespace MauiAppTest.ViewModel.MyTask
         async Task Tap(string str)
         {
             IsLoading = true;
-            await Task.Delay(1000);
+            await Task.Delay(2500);
             await Shell.Current.GoToAsync($"mytask/{nameof(DetailPage)}?Text={str}");
             IsLoading = false;
+        }
+
+        [RelayCommand]
+        async Task GetNewItems()
+        {
+            IsRefreshing = true;
+            await Task.Delay(2500);
+            Items.Add(DateTime.Now.ToString("G"));
+            IsRefreshing = false;
         }
     }
 

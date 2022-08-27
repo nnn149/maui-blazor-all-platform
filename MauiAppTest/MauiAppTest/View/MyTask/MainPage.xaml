@@ -17,9 +17,18 @@
         <Entry Text="{Binding Text}" Grid.Row="1" Placeholder="请输入.."></Entry>
         <Button Command="{Binding AddCommand}" Grid.Row="1" Grid.Column="1" Text="添加"></Button>
 
-        <CollectionView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Items}">
+        <!--下拉刷新-->
+        <RefreshView
+            Grid.Row="2" Grid.ColumnSpan="2"
+            Command="{Binding GetNewItemsCommand}"
+            IsRefreshing="{Binding IsRefreshing}"
+            >
 
-            <!--xaml内手动模拟数据源
+            <CollectionView  ItemsSource="{Binding Items}" SelectionMode="None">
+
+
+
+                <!--xaml内手动模拟数据源
             <CollectionView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Apples</x:String>
@@ -28,37 +37,45 @@
                 </x:Array>
             </CollectionView.ItemsSource>-->
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem Text="删除"
+                <CollectionView.EmptyView>
+                    <Label FontSize="24">CollectionView数据为空</Label>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="删除"
                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=DelCommand}"
                                            CommandParameter="{Binding .}"
                                            BackgroundColor="Red"/>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Grid Padding="0,5">
-                            <Frame>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="0,5">
+                                <Frame>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}},Path=TapCommand}"
                                         CommandParameter="{Binding .}"
                                         
                                         />
-                                </Frame.GestureRecognizers>
-                                <Label Text="{Binding .}" FontSize="24"/>
-                            </Frame>
-                        </Grid>
-                    </SwipeView>
+                                    </Frame.GestureRecognizers>
+                                    <Label Text="{Binding .}" FontSize="24"/>
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-        </CollectionView>
+            </CollectionView>
 
-        <ActivityIndicator Grid.RowSpan="3" Grid.ColumnSpan="3"  IsRunning="{Binding IsLoading}">
+        </RefreshView>
+
+        <!--转圈指示器-->
+        <ActivityIndicator Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand" IsRunning="{Binding IsLoading}">
 
         </ActivityIndicator>
     </Grid>
